@@ -23,7 +23,6 @@ export const getProductById = async (req, res) => {
     }
 }
 export const saveProduct = (req, res) => {
-    console.log("Request File Save Product :", req.files)
     if(req.files === null) return res.status(400).json({msg : "No File Uploaded!"});
     const name = req.body.title;
     const file = req.files.file;
@@ -32,7 +31,7 @@ export const saveProduct = (req, res) => {
     const fileName = file.md5 + ext;
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     const allowedType = ['.png', '.jpeg', '.jpg'];
-    
+
     if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg : "Invalid Image Type!"});
     if(fileSize > 5000000) return res.status(422).json({msg : "Image must be less than 5MB!"});
 
@@ -46,6 +45,7 @@ export const saveProduct = (req, res) => {
         }
     })
 }
+
 export const updateProduct = async (req, res) => {
     const product = await Product.findOne({
         where:{
@@ -78,6 +78,9 @@ export const updateProduct = async (req, res) => {
 
     const name = req.body.title;
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+    
+
+    console.log("url name : ", url)
 
     try {
         await Product.update({name : name, image : fileName, url : url}, {

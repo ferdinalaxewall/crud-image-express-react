@@ -1,20 +1,17 @@
-import Card from "./Components/Card";
-import axios from "axios";
-
-const getProducts = async () => {
-  await axios.get("http://localhost:5000/products")
-}
-
-console.log(getProducts)
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import ProductList from "./Components/ProductList";
+import AddProduct from "./Components/AddProduct";
+import EditProduct from "./Components/EditProduct";
 
 function App() {
   return (
-    <div className="container mt-5 py-5 px-3">
-      <button className="btn btn-primary">Add Product</button>
-      <div className="row mt-3">
-        <Card />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ProductList />} />
+        <Route path="add" element={<AddProduct />} />
+        <Route path="edit/:id" element={<EditProduct />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
